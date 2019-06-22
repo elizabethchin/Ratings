@@ -67,6 +67,20 @@ def load_movies():
 
 def load_ratings():
     """Load ratings from u.data into database."""
+    print("Ratings")
+
+    Rating.query.delete()
+
+    for row in open("seed_data/u.data"):
+        row = row.rstrip().split("|")
+        user_id, movie_id, score, extra = row
+
+        rating = Rating(user_id=user_id,
+                        movie_id=movie_id,
+                        score=score)
+        db.session.add(rating)
+
+    db.session.commit()
 
 
 def set_val_user_id():
