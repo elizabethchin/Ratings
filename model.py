@@ -29,7 +29,6 @@ class User(db.Model):
         
         return "<User user_id={} email={}>".format(self.user_id, self.email)
 
-
 # Put your Movie and Rating model classes here.
 
 class Movie(db.Model):
