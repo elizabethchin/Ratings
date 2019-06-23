@@ -2,9 +2,9 @@
 
 from sqlalchemy import func
 from model import User
-from model import Movie
-# from model import Rating
-# from model import Movie
+from model import Movie # remember to import so class can be accessed
+from model import Rating
+
 
 from model import connect_to_db, db
 from server import app
@@ -72,8 +72,12 @@ def load_ratings():
     Rating.query.delete()
 
     for row in open("seed_data/u.data"):
-        row = row.rstrip().split("|")
+        row = row.rstrip().split("\t")
         user_id, movie_id, score, extra = row
+
+        user_id = int(user_id)
+        movie_id = int(movie_id)
+        score = int(score)
 
         rating = Rating(user_id=user_id,
                         movie_id=movie_id,

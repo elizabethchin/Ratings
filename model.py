@@ -23,6 +23,7 @@ class User(db.Model):
     age = db.Column(db.Integer, nullable=True)
     zipcode = db.Column(db.String(15), nullable=True)
 
+
     def __repr__(self):
         """Provide helpful representation when printed."""
         
@@ -47,9 +48,28 @@ class Rating(db.Model):
     __tablename__ = "ratings"
 
     rating_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    movie_id = db.Column(db.Integer, nullable=True)
-    user_id = db.Column(db.Integer, nullable=True)
+    movie_id = db.Column(db.Integer, db.ForeignKey('movies.movie_id'), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=True)
     score = db.Column(db.Integer, nullable=True)
+
+    # Define relationship to user, this gets the entire user object so you can do
+    #Rating.user.name, Rating.user.age etc
+    #relationship adds an attribute on ratings objects called user and movie
+    user = db.relationship("User",
+                           backref=db.backref("ratings",
+                                              order_by=rating_id))
+
+    #Define relationship to movie
+    movie = db.relationship("Movie",
+                            backref=db.backref("ratings",
+                                               order_by=rating_id))
+
+    def __repr__(self):
+        """Provide helpful representation when pringed."""
+        return f"""<Rating rating_id={self.rating_id} 
+                   movie_id={self.movie_id} 
+                   user_id={self.user_id} 
+                   score={self.score}>"""        
 
 
 
@@ -63,7 +83,7 @@ def connect_to_db(app):
     # Configure to use our PstgreSQL database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///ratings'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SQLALCHEMY_ECHO'] = True
+    # app.config['SQLALCHEMY_ECHO'] = True
     db.app = app
     db.init_app(app)
 
