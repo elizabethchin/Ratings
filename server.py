@@ -57,6 +57,30 @@ def register_process():
 
     return redirect("/")
 
+@app.route("/login")
+def login_form():
+    """Login page."""
+
+    return render_template("login_form.html")
+
+@app.route("/handle-login")
+def handle_login():
+    email = request.args.get("email")
+    password = request.args.get("password")
+
+    users = User.query.all()
+    for user in users:
+        if user.email == email and user.password == password:
+            session["user"] = user.user_id
+            flash("Logged in")
+            return redirect("/")            
+        elif user.email == email and user.password != password:
+            flash("Wrong password")
+        else:
+            flash("User does not exist")
+
+
+
 
 
 if __name__ == "__main__":
