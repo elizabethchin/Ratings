@@ -30,7 +30,7 @@ def user_list():
     """Show list of users."""
 
     users = User.query.all()
-    return render_template ("user_list.html", users=users)
+    return render_template("user_list.html", users=users)
 
 @app.route("/register")
 def register_form():
@@ -38,7 +38,7 @@ def register_form():
 
     return render_template("register_form.html")
 
-@app.route("/register", methods=["POST"])
+@app.route("/register-process", methods=["POST"])
 def register_process():
     """Register user, POST method."""
     
@@ -51,7 +51,7 @@ def register_process():
         if user.password == password:
             pass
     else:
-        name = User(email = email, password = password)
+        name = User(email=email, password=password)
         db.session.add(name)
     db.session.commit()
 
