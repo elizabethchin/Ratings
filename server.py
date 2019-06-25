@@ -22,7 +22,7 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def index():
     """Homepage."""
-
+    
     return render_template("homepage.html")
 
 @app.route("/users")
@@ -73,12 +73,14 @@ def handle_login():
         if user.email == email and user.password == password:
             session["user"] = user.user_id
             flash("Logged in")
+            flash("Logged out")
             return redirect("/")            
         elif user.email == email and user.password != password:
             flash("Wrong password")
         else:
             flash("User does not exist")
 
+@app.route("user-info")
 
 
 
@@ -86,7 +88,7 @@ def handle_login():
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
     # point that we invoke the DebugToolbarExtension
-    app.debug = True
+    app.debug = False
     # make sure templates, etc. are not cached in debug mode
     app.jinja_env.auto_reload = app.debug
 
