@@ -96,7 +96,6 @@ def user_info():
                             zipcode=zipcode,
                             user=user)
       
-
 # @app.route("user-info")
 # def user_info():
 #     pass
