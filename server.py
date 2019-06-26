@@ -87,6 +87,14 @@ def logout():
         session["user"] = None
         flash("Logged out")
     return redirect("/")
+
+@app.route("/user-info")
+def user_info():
+
+    return render_template("user_info.html",
+                            age=age,
+                            zipcode=zipcode,
+                            user=user)
       
 
 # @app.route("user-info")
