@@ -22,9 +22,10 @@ app.jinja_env.undefined = StrictUndefined
 @app.route('/')
 def index():
     """Homepage."""
-    
-    return render_template("homepage.html")
 
+    return render_template("homepage.html",
+                            session=session)
+   
 @app.route("/users")
 def user_list():
     """Show list of users."""
@@ -46,15 +47,14 @@ def register_process():
     email = request.form.get("email")
     password = request.form.get("password")
 
-    users = User.query.all()
-    for user in users:
-        if user.password == password:
-            pass
-    else:
+    users = User.query.filter_by(email=email).all()
+    length = len(users)
+    
+    if length == 0:
         name = User(email=email, password=password)
         db.session.add(name)
-    db.session.commit()
-
+        db.session.commit()
+        
     return redirect("/")
 
 @app.route("/login")
@@ -67,20 +67,31 @@ def login_form():
 def handle_login():
     email = request.args.get("email")
     password = request.args.get("password")
+    print(email)
+    print(password)
 
-    users = User.query.all()
-    for user in users:
-        if user.email == email and user.password == password:
-            session["user"] = user.user_id
-            flash("Logged in")
-            flash("Logged out")
-            return redirect("/")            
-        elif user.email == email and user.password != password:
-            flash("Wrong password")
-        else:
-            flash("User does not exist")
+    user = User.query.filter_by(email=email).first()
+    if user != None and user.password == password:
+        print("here")
+        print(user.password)
+        session["user"] = user.user_id
+        flash("Logged in")
+        return redirect("/")            
+    else:
+        flash("Wrong password")
+        return redirect("/")
 
-@app.route("user-info")
+@app.route("/logout")
+def logout():
+    if "user" in session:
+        session["user"] = None
+        flash("Logged out")
+    return redirect("/")
+      
+
+# @app.route("user-info")
+# def user_info():
+#     pass
 
 
 
