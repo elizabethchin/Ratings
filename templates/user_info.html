@@ -6,10 +6,9 @@
 
   <ul>
     {% for user in users %}
-      <li>{{ user.age }}</li><br>
-      <li>{{ user.zipcode }}</li><br>
-      <li>{{ user.rating }}</li>
-    {% endfor %}
+      <li>Age: {{ User.age }}</li><br>
+      <li>Zipcode: {{ User.zipcode }}</li><br>
+     {% endfor %} 
   </ul>
 
 {% endblock %}

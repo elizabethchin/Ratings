@@ -33,6 +33,15 @@ def user_list():
     users = User.query.all()
     return render_template("user_list.html", users=users)
 
+@app.route("/users/:user_id")
+def user_list(user_id):
+    """Show list of users."""
+
+    user = User.query.filter_by(user_id=user_id).first()
+    new_table = db.session.query(Movie, Rating).join(Movie).all()
+    print(new_table)
+    return render_template("user_info.html", user=user)
+
 @app.route("/register")
 def register_form():
     """Make a new user with registration form."""
@@ -87,19 +96,6 @@ def logout():
         session["user"] = None
         flash("Logged out")
     return redirect("/")
-
-@app.route("/user-info")
-def user_info():
-
-    return render_template("user_info.html",
-                            age=age,
-                            zipcode=zipcode,
-                            user=user)
-      
-# @app.route("user-info")
-# def user_info():
-#     pass
-
 
 
 
