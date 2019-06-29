@@ -33,11 +33,11 @@ def user_list():
     users = User.query.all()
     return render_template("user_list.html", users=users)
 
-@app.route("/users/:user_id")
-def user_list(user_id):
+@app.route("/users/:userid")
+def user_list(userid):
     """Show list of users."""
 
-    user = User.query.filter_by(user_id=user_id).first()
+    user = User.query.filter_by(user_id=userid).first()
     new_table = db.session.query(Movie, Rating).join(Movie).all()
     print(new_table)
     return render_template("user_info.html", user=user)
