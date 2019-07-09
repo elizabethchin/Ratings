@@ -1,15 +1,25 @@
 {% extends 'base.html' %}
+<<<<<<< HEAD
 {% block title %}User Information{% endblock %}
+=======
+{% block title %}User List{% endblock %}
+>>>>>>> 971d5b8dcc9f5005a18185a0677f5608d777d6dc
 {% block content %}
 
   <h2>User Information</h2>
 
   <ul>
     {% for user in users %}
+<<<<<<< HEAD
       <li>{{ user.age }}<br>
         {{ user.zipcode }}<br>
       </li>
     {% endfor %}
+=======
+      <li>Age: {{ User.age }}</li><br>
+      <li>Zipcode: {{ User.zipcode }}</li><br>
+     {% endfor %} 
+>>>>>>> 971d5b8dcc9f5005a18185a0677f5608d777d6dc
   </ul>
 
 {% endblock %}
