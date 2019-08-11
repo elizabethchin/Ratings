@@ -34,8 +34,8 @@ def user_list():
     return render_template("user_list.html", users=users)
 
 @app.route("/users/:userid")
-def user_list(userid):
-    """Show list of users."""
+def user(userid):
+    """Show each user."""
 
     user = User.query.filter_by(user_id=userid).first()
     new_table = db.session.query(Movie, Rating).join(Movie).all()
